@@ -44,8 +44,10 @@ jobs:
             # Skip main branch
             if [ "$branch" = "master" ] || [ "$branch" = "main" ]; then
               echo "  Main branch: ${branch}. Skipping..."
-              echo "Reza checks the main branch rather skipping...." #Reza
-              continue
+              echo "Reza checks the main branch rather skipping...." #Reza written
+
+              #Reza comments the following
+              #continue  
             fi
             
             # Skip if open PR exists
