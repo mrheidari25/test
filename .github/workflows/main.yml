@@ -44,6 +44,7 @@ jobs:
             # Skip main branch
             if [ "$branch" = "master" ] || [ "$branch" = "main" ]; then
               echo "  Main branch: ${branch}. Skipping..."
+              echo "Reza checks the main branch rather skipping...." #Reza
               continue
             fi
             
