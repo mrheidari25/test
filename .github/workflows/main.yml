@@ -87,6 +87,8 @@ jobs:
             ## Changes Summary  
             *(Generated using Gemini AI)*  
             $summary"
+            echo "Reza skipping the rest of the loop"
+            continue #Reza
           
               # Create PR, close PR, and delete the branch
               echo "  Create PR for ${branch}..."
