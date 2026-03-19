@@ -43,9 +43,12 @@ jobs:
           
           # Fetch all branches
           git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
+
+          echo "Reza starts the loop..."
           # Loop through branches
           while read branch; do
-          
+
+            echo "Reza skips the main branch..."
             # Skip main branch
             if [ "$branch" = "master" ] || [ "$branch" = "main" ]; then
               echo "  Main branch: ${branch}. Skipping..."
@@ -54,14 +57,17 @@ jobs:
               #Reza comments the following3
               #continue  
             fi
-            
+
+            echo "Reza checks open PR..."
             # Skip if open PR exists
             open_prs=$(gh pr list --head "$branch" --json number --jq 'length')
             if [ "$open_prs" -gt 0 ]; then
               echo "There exists an open PR for branch $branch..."
               continue
             fi
-          
+
+            
+          echo "Reza check commits date
           # Get last commit date
           lastCommitDate=$(gh api repos/${{ github.repository }}/commits/$branch --jq '.commit.committer.date')
           # Calculate branch age in days
@@ -74,7 +80,7 @@ jobs:
             # Get number of new commits
             commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
 
-            echo "Reza ccounting commits ...."$commitCount 
+            echo "Reza counting commits ...."$commitCount 
             if [ $commitCount -gt 0 ]; then
               # Format the last commit date
               lastCommitDateF=$(date -u -d "$lastCommitDate" +"%B %d, %Y")
