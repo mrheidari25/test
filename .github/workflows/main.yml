@@ -33,10 +33,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          #Reza commented the following
+          #Reza commented the following1
           #AGE_CUTOFF=800 # In days
 
-          #Reza added the following
+          #Reza added the following2
           AGE_CUTOFF=-1 
           
           MAIN_BRANCH=master
@@ -51,7 +51,7 @@ jobs:
               echo "  Main branch: ${branch}. Skipping..."
               echo "Reza checks the main branch rather skipping...." #Reza written
 
-              #Reza comments the following
+              #Reza comments the following3
               #continue  
             fi
             
