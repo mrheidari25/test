@@ -33,7 +33,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          AGE_CUTOFF=800 # In days
+          #Reza commented the following
+          #AGE_CUTOFF=800 # In days
+
+          #Reza added the following
+          AGE_CUTOFF=-1 
+          
           MAIN_BRANCH=master
           
           # Fetch all branches
