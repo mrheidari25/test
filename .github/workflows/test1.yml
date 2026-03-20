@@ -74,5 +74,59 @@ jobs:
               echo "  Branch $branch is still active. Last commit $branchAgeDays days ago. Skipping..."
             else
               echo "  Branch $branch is $branchAgeDays days old. Archiving..."
-            fi
+              # Get number of new commits
+              commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
+              echo "Reza counting commits ...."$commitCount 
+
+              if [ $commitCount -gt 0 ]; then
+              # Format the last commit date
+              lastCommitDateF=$(date -u -d "$lastCommitDate" +"%B %d, %Y")
+              # Get the first commit date (index 0 is the oldest commit in the diff)
+              firstCommitDate=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[0].commit.committer.date')
+              firstCommitDateF=$(date -u -d "$firstCommitDate" +"%B %d, %Y")
+              # Get contributors to the branch
+              contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "  - \(.commit.author.name) (@\(.author.login))  "' | sort | uniq)
+              # Get a summary of the branch changes using Google's Gemini AI
+              diff=$(git diff origin/$MAIN_BRANCH...origin/$branch)
+              summary=$(python .github/workflows/create_pr_summary.py <<< "$diff")
+              # Create the PR body with contributors
+              prBody="## **Archiving branch \`$branch\`**
+            - **Last commit on:** $lastCommitDateF
+            - **First commit on:** $firstCommitDateF  
+            - **Total number of commits:** $commitCount  
+            - **Contributors:**  
+              $contributors  
+              ## Changes Summary  
+              *(Generated using Gemini AI)*  
+              $summary"
+              echo "Reza skipping the rest of the loop"
+              continue #Reza
+
+              # Create PR, close PR, and delete the branch
+              echo "  Create PR for ${branch}..."
+              gh pr create --title "[Archive] Branch \"$branch\"" --body "$prBody" --base $MAIN_BRANCH --head $branch >/dev/null 2>&1 || true
+              # Wait for the PR to be created and close it
+              maxRetries=5
+              retryInterval=5  # seconds
+              prURL=$(gh pr list --head "$branch" --state open --json url --jq '.[0].url')
+              for ((i=1; i <= $maxRetries; i++)); do
+                if gh pr view $prURL &>/dev/null; then
+                  echo "  Closing the PR..."
+                  gh pr close $prURL
+                  git push origin --delete $branch
+                  echo "  Branch $branch archived and deleted."
+                  break
+                fi
+                  echo "  Waiting for PR $prURL to be created. Retrying in $retryInterval seconds..."
+                  sleep $retryInterval
+              done
+          
+              if [[ -z "$prURL" ]]; then
+                echo "  Failed to find and close the PR after $maxRetries retries."
+              fi
+              else
+                echo "  No commits between $branch and $MAIN_BRANCH. Deleting branch directly..."
+                git push origin --delete $branch
+              fi
+            fi            
           done < branches.txt
