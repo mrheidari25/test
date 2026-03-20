@@ -1,4 +1,4 @@
-name: Archive Old Branches
+name: Test1
 
 on:
   workflow_dispatch:
