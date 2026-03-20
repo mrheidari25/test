@@ -47,4 +47,11 @@ jobs:
           while read branch; do
             continue
             echo "Reza skips the main branch..."
+            # Skip main branch
+            if [ "$branch" = "master" ] || [ "$branch" = "main" ]; then
+              echo "  Main branch: ${branch}. Skipping..."
+              echo "Reza checks the main branch rather skipping...." #Reza written
+              #Reza comments the following3
+              #continue  
+            fi
           done < branches.txt
