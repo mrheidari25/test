@@ -65,8 +65,6 @@ jobs:
               echo "There exists an open PR for branch $branch..."
               continue
             fi
-            
-            echo "Reza check commits date
-                
+ 
             continue
           done < branches.txt
