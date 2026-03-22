@@ -46,8 +46,7 @@ jobs:
           
           # Loop through branches
           while read branch; do
-            echo "Reza is in the loop..."
-            
+            echo "Reza is in the loop..."            
             continue
             echo "Reza is in the loop2..."            
           done < branches.txt
