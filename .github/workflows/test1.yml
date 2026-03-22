@@ -44,10 +44,9 @@ jobs:
           git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
           echo "Reza starts the loop..."
           echo "Reza is in the loop..."
-          
+          echo "Reza is in the loop2..."
           # Loop through branches
           while read branch; do
-            
             continue
             echo "Reza is in the loop..."
             echo "Reza skips the main branch..."
