@@ -11,3 +11,4 @@ jobs:
     steps:
       - name: SayHello
         run: echo "Hello"
+        run: echo "Hello2"
