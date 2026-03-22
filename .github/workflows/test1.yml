@@ -43,6 +43,7 @@ jobs:
           # Fetch all branches
           git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
           echo "Reza starts the loop..."
+          echo "Reza is in the loop..."
           # Loop through branches
           while read branch; do
             echo "Reza is in the loop..."
