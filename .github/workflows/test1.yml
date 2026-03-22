@@ -47,10 +47,9 @@ jobs:
           # Loop through branches
           while read branch; do
             echo "Reza is in the loop..."$branch
-            continue
-            echo "Reza is in the loop2..."
 
             echo "Reza skips the main branch..."
+            continue
             # Skip main branch
             if [ "$branch" = "master" ] || [ "$branch" = "main" ]; then
               echo "  Main branch: ${branch}. Skipping..."
