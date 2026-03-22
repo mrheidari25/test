@@ -59,12 +59,11 @@ jobs:
             fi
             
             echo "Reza checks open PR..."
-            continue
             # Skip if open PR exists
             open_prs=$(gh pr list --head "$branch" --json number --jq 'length')
             if [ "$open_prs" -gt 0 ]; then
               echo "There exists an open PR for branch $branch..."
               continue
             fi
-
+            continue
           done < branches.txt
