@@ -65,5 +65,12 @@ jobs:
               echo "There exists an open PR for branch $branch..."
               continue
             fi
+            
+            echo "Reza check commits date
+            # Get last commit date
+            lastCommitDate=$(gh api repos/${{ github.repository }}/commits/$branch --jq '.commit.committer.date')
+            # Calculate branch age in days
+            branchAgeDays=$(( ($(date -u +%s) - $(date -u -d "$lastCommitDate" +%s)) / 86400 ))
+            # Check whether the branch is old enough                  
             continue
           done < branches.txt
