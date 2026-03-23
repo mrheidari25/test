@@ -77,7 +77,8 @@ jobs:
             else
               echo "  Branch $branch is $branchAgeDays days old. Archiving..."
               # Get number of new commits
-              commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
+              #commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
+              commitCount=0
               echo "Reza counting commits ...."$commitCount 
             fi
             continue
