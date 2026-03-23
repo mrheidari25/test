@@ -80,7 +80,7 @@ jobs:
               myrepo=${{ github.repository }}
               #commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
               commitCount=0
-              echo "Reza counting commits ...."$commitCount 
+              echo "Reza counting commits in "$myrepo $commitCount 
             fi
             continue
           done < branches.txt
