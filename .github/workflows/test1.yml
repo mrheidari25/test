@@ -66,12 +66,14 @@ jobs:
               continue
             fi
              
-            echo "Reza check commits date"
             # Get last commit date
             lastCommitDate=$(gh api repos/${{ github.repository }}/commits/$branch --jq '.commit.committer.date')
             # Calculate branch age in days
             branchAgeDays=$(( ($(date -u +%s) - $(date -u -d "$lastCommitDate" +%s)) / 86400 ))
+            echo "Reza check commits date : $branchAgeDays"
             # Check whether the branch is old enough   
-
+            if [ $branchAgeDays -lt $AGE_CUTOFF ]; then
+              echo "  Branch $branch is still active. Last commit $branchAgeDays days ago. Skipping..."
+            fi
             continue
           done < branches.txt
