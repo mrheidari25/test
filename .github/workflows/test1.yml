@@ -74,6 +74,11 @@ jobs:
             # Check whether the branch is old enough   
             if [ $branchAgeDays -lt $AGE_CUTOFF ]; then
               echo "  Branch $branch is still active. Last commit $branchAgeDays days ago. Skipping..."
+            else
+              echo "  Branch $branch is $branchAgeDays days old. Archiving..."
+              # Get number of new commits
+              commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
+              echo "Reza counting commits ...."$commitCount 
             fi
             continue
           done < branches.txt
