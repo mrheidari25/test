@@ -36,7 +36,7 @@ jobs:
           #Reza commented the following1
           #AGE_CUTOFF=800 # In days
           #Reza added the following2
-          AGE_CUTOFF=1000
+          AGE_CUTOFF=-1
           
           MAIN_BRANCH=master
           
