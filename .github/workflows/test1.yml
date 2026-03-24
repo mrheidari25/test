@@ -38,7 +38,7 @@ jobs:
           #Reza added the following2
           AGE_CUTOFF=-1
           
-          MAIN_BRANCH=master
+          MAIN_BRANCH=main
           
           # Fetch all branches
           git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
