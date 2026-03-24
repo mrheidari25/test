@@ -86,7 +86,7 @@ jobs:
               
               commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
               #commitCount=0
-              echo "Reza counting commits in "$myrepo $commitCount 
+              echo "Reza counting commits in "$myrepo $branch $commitCount 
 
               continue
               firstCommitDate=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[0].commit.committer.date')              
