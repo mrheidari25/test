@@ -69,25 +69,26 @@ jobs:
             # Get last commit date
             lastCommitDate=$(gh api repos/${{ github.repository }}/commits/$branch --jq '.commit.committer.date')
             echo "Reza last commit date : $lastCommitDate"
-            continue
             
             # Calculate branch age in days
             branchAgeDays=$(( ($(date -u +%s) - $(date -u -d "$lastCommitDate" +%s)) / 86400 ))
             echo "Reza check commits date : $branchAgeDays"
+            
             # Check whether the branch is old enough   
             if [ $branchAgeDays -lt $AGE_CUTOFF ]; then
               echo "  Branch $branch is still active. Last commit $branchAgeDays days ago. Skipping..."
             else
               echo "  Branch $branch is $branchAgeDays days old. Archiving..."
+              
               # Get number of new commits
               myrepo="repos/${{ github.repository }}/compare/$MAIN_BRANCH"
               commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
-              firstCommitDate=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[0].commit.committer.date')
-              
-              contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "  - \(.commit.author.name) (@\(.author.login))  "' | sort | uniq)
-
               #commitCount=0
               echo "Reza counting commits in "$myrepo $commitCount 
+
+              continue
+              firstCommitDate=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[0].commit.committer.date')              
+              contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "  - \(.commit.author.name) (@\(.author.login))  "' | sort | uniq)
             fi
             continue
           done < branches.txt
