@@ -82,6 +82,8 @@ jobs:
               
               # Get number of new commits
               myrepo="repos/${{ github.repository }}/compare/$MAIN_BRANCH"
+
+              continue
               commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
               #commitCount=0
               echo "Reza counting commits in "$myrepo $commitCount 
