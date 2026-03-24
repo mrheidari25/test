@@ -55,7 +55,7 @@ jobs:
               echo "Reza checks the main branch rather skipping...." #Reza written
 
               #Reza comments the following3
-              #continue  
+              continue  
             fi
             
             echo "Reza checks open PR..."
