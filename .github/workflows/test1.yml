@@ -71,7 +71,7 @@ jobs:
             
             # Calculate branch age in days
             branchAgeDays=$(( ($(date -u +%s) - $(date -u -d "$lastCommitDate" +%s)) / 86400 ))
-            echo "Reza check commits date : $branchAgeDays"
+            echo "Reza checks the last commit's date (how many days before): $branchAgeDays"
             
             # Check whether the branch is old enough   
             if [ $branchAgeDays -lt $AGE_CUTOFF ]; then
@@ -91,6 +91,11 @@ jobs:
               echo "Reza firstCommitDate ....."$firstCommitDate             
               contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "  - \(.commit.author.name) (@\(.author.login))  "' | sort | uniq)
               echo "Reza contributors ....."$contributors
+
+              # Get a summary of the branch changes using Google's Gemini AI
+              diff=$(git diff origin/$MAIN_BRANCH...origin/$branch)
+              echo "Reza gets diff between $MAIN_BRANCH  and  "$branch
+              #summary=$(python .github/workflows/create_pr_summary.py <<< "$diff")
             fi
             continue
           done < branches.txt
