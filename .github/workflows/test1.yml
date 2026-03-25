@@ -88,7 +88,9 @@ jobs:
               echo "Reza counting commits in "$myrepo $branch $commitCount 
 
               firstCommitDate=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[0].commit.committer.date')              
+              echo "Reza firstCommitDate ....."$firstCommitDate
               continue
+              
               contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "  - \(.commit.author.name) (@\(.author.login))  "' | sort | uniq)
             fi
             continue
