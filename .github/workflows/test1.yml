@@ -47,12 +47,11 @@ jobs:
           # Loop through branches
           while read branch; do
             echo "Reza is in the loop..."$branch
-            echo "Reza skips the main branch..."
             
             # Skip main branch
             if [ "$branch" = "master" ] || [ "$branch" = "main" ]; then
               echo "  Main branch: ${branch}. Skipping..."
-              echo "Reza checks the main branch rather skipping...." #Reza written
+              #echo "Reza checks the main branch rather skipping...." #Reza written
 
               #Reza comments the following3
               continue  
