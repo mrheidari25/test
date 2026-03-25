@@ -96,7 +96,8 @@ jobs:
               diff=$(git diff origin/$MAIN_BRANCH...origin/$branch)
               echo "Reza gets diff between $MAIN_BRANCH  and  "$branch
               echo "Reza shows the diff ....$diff"
-              #summary=$(python .github/workflows/create_pr_summary.py <<< "$diff")
+              summary=$(python .github/workflows/create_pr_summary.py <<< "$diff")
+              echo "Reza shows a summary ....$summary"
             fi
             continue
           done < branches.txt
