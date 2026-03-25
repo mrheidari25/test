@@ -2,7 +2,7 @@ import os
 import sys
 from google import genai
 
-echo "Reza exits summarg ..."
+print("Reza exits summarg ...")
 exit(0)
 # Pass the gemini api key
 api_key = os.environ.get('GEMINI_API_KEY')
