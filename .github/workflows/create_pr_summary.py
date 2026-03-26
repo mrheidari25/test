@@ -14,9 +14,6 @@ print("\nReza shows GEMINI_API_KEY= ",api_key)
 
 prompt = sys.stdin.read() # Expects a git diff
 print("\nReza shows PROMPT= ",prompt)
-print("\nReza exits summary ...\n\n")
-print("Reza....\n\n\n")
-exit(0)
 
 response = client.models.generate_content(
     model="gemini-2.5-flash",
@@ -24,6 +21,10 @@ response = client.models.generate_content(
 )
 
 summary = response.text
+print("Reza .... summary",$summary)
+print("\nReza exits summary ...\n\n")
+print("Reza....\n\n\n")
+exit(0)
 
 # Strip the response from a surrounding markdown code block
 if summary.startswith("```markdown"):
