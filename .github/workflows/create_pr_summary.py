@@ -6,9 +6,8 @@ print("\n Reza exits summary ...")
 
 # Pass the gemini api key
 api_key = os.environ.get('GEMINI_API_KEY')
-exit(0)
 client = genai.Client(api_key=api_key)
-
+exit(0)
 prompt = sys.stdin.read() # Expects a git diff
 
 response = client.models.generate_content(
