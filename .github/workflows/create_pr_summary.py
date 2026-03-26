@@ -10,10 +10,10 @@ from google import genai
 # Pass the gemini api key
 api_key = os.environ.get('GEMINI_API_KEY')
 client = genai.Client(api_key=api_key)
-print("\nReza shows GEMINI_API_KEY= $api_key\n")
+print("\nReza shows GEMINI_API_KEY= ",api_key)
 
 prompt = sys.stdin.read() # Expects a git diff
-print("\nReza shows PROMPT= $prompt\n\n")
+print("\nReza shows PROMPT= ",prompt)
 print("\nReza exits summary ...\n\n")
 print("Reza....\n\n\n")
 exit(0)
