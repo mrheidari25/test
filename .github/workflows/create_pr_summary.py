@@ -5,10 +5,10 @@ from google import genai
 # Pass the gemini api key
 api_key = os.environ.get('GEMINI_API_KEY')
 client = genai.Client(api_key=api_key)
-print("\n Reza exits summary ...")
 
-exit(0)
 prompt = sys.stdin.read() # Expects a git diff
+print("\n Reza exits summary ...")
+exit(0)
 
 response = client.models.generate_content(
     model="gemini-2.5-flash",
