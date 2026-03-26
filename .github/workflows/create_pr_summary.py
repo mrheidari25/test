@@ -6,7 +6,7 @@ from google import genai
 api_key = os.environ.get('GEMINI_API_KEY')
 
 
-print("\n Reza exits summary ...")
+print("\n Reza exits summary ...\n\n")
 exit(0)
 
 client = genai.Client(api_key=api_key)
