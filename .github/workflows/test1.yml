@@ -35,6 +35,7 @@ jobs:
         run: |
           echo "Reza ....GITHUB_TOKEN = "$GITHUB_TOKEN
           echo "Reza ....GEMINI_API_KEY = "$GEMINI_API_KEY
+          gh auth status
         
           #Reza commented the following1
           #AGE_CUTOFF=800 # In days
