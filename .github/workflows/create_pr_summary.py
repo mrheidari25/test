@@ -7,7 +7,7 @@ api_key = os.environ.get('GEMINI_API_KEY')
 
 
 print("\nReza exits summary ...\n\n")
-print("\n\n\n")
+print("Reza....\n\n\n")
 exit(0)
 
 client = genai.Client(api_key=api_key)
