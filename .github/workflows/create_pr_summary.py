@@ -21,11 +21,7 @@ response = client.models.generate_content(
 )
 
 summary = response.text
-print("Reza .... summary",summary)
 
-print("\nReza exits summary ...\n\n")
-print("Reza....\n\n\n")
-exit(0)
 
 # Strip the response from a surrounding markdown code block
 if summary.startswith("```markdown"):
@@ -37,3 +33,8 @@ if summary.endswith("```"):
     summary = summary.removesuffix("```").strip()
 
 print(summary)
+
+#print("Reza .... summary",summary)
+#print("\nReza exits summary ...\n\n")
+print("Reza....\n\n\n")
+#exit(0)
