@@ -1,16 +1,22 @@
 import os
 import sys
+
+#ignore this comment#Reza commented the following since it fails
 from google import genai
+
+#Reza added the following since it works better
+#import google.generativeai as genai #Reza commented his own command
 
 # Pass the gemini api key
 api_key = os.environ.get('GEMINI_API_KEY')
 client = genai.Client(api_key=api_key)
+print("\nReza shows GEMINI_API_KEY= $api_key\n")
+
+prompt = sys.stdin.read() # Expects a git diff
+print("\nReza shows PROMPT= $prompt\n\n")
 print("\nReza exits summary ...\n\n")
 print("Reza....\n\n\n")
 exit(0)
-
-prompt = sys.stdin.read() # Expects a git diff
-
 
 response = client.models.generate_content(
     model="gemini-2.5-flash",
