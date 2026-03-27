@@ -33,6 +33,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
+          echo "Reza starts.................................."
+
           echo "Reza ....GITHUB_TOKEN = "$GITHUB_TOKEN
           echo "Reza ....GEMINI_API_KEY = "$GEMINI_API_KEY
           gh auth status
@@ -50,8 +52,8 @@ jobs:
           
           # Loop through branches
           while read branch; do
-            echo "Reza is in the loop..."$branch
-            
+
+                        
             # Skip main branch
             if [ "$branch" = "master" ] || [ "$branch" = "main" ]; then
               echo "  Main branch: ${branch}. Skipping..."
