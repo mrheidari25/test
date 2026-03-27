@@ -13,7 +13,7 @@ client = genai.Client(api_key=api_key)
 print("\nReza shows GEMINI_API_KEY= ",api_key)
 
 prompt = sys.stdin.read() # Expects a git diff
-print("\nReza shows PROMPT= ",prompt)
+#print("\nReza shows PROMPT= ",prompt)
 
 response = client.models.generate_content(
     model="gemini-2.5-flash",
