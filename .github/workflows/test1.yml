@@ -102,6 +102,17 @@ jobs:
               #echo "Reza shows the diff ....$diff"
               summary=$(python .github/workflows/create_pr_summary.py <<< "$diff")
               echo "Reza shows a summary ....$summary"
+              # Create the PR body with contributors
+              prBody="## **Archiving branch \`$branch\`**
+            - **Last commit on:** $lastCommitDateF
+            - **First commit on:** $firstCommitDateF  
+            - **Total number of commits:** $commitCount  
+            - **Contributors:**  
+            $contributors  
+            ## Changes Summary  
+            *(Generated using Gemini AI)*  
+            $summary"
+            
             fi
             continue
           done < branches.txt
