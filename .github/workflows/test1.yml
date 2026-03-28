@@ -118,6 +118,11 @@ jobs:
               echo "  Create PR for ${branch}..."
               gh pr create --title "[Archive] Branch \"$branch\"" --body "$prBody" --base $MAIN_BRANCH --head $branch >/dev/null 2>&1 || true
               echo "Reza PR created...."
+              
+              # Wait for the PR to be created and close it
+              maxRetries=5
+              retryInterval=5  # seconds
+              prURL=$(gh pr list --head "$branch" --state open --json url --jq '.[0].url')
             fi
             continue
           done < branches.txt
