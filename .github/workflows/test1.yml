@@ -112,7 +112,7 @@ jobs:
             ## Changes Summary  
             *(Generated using Gemini AI)*  
             $summary"
-            
+            echo "Reza ...prBody : "$prBody
             fi
             continue
           done < branches.txt
