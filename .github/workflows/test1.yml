@@ -124,6 +124,18 @@ jobs:
               retryInterval=5  # seconds
               prURL=$(gh pr list --head "$branch" --state open --json url --jq '.[0].url')
               echo "Reza PR URL...."$prURL
+
+              for ((i=1; i <= $maxRetries; i++)); do
+                if gh pr view $prURL &>/dev/null; then
+                  echo "  Closing the PR..."
+                  #gh pr close $prURL
+                  #git push origin --delete $branch
+                  #echo "  Branch $branch archived and deleted."
+                  break
+                fi
+                  echo "  Waiting for PR $prURL to be created. Retrying in $retryInterval seconds..."
+                  sleep $retryInterval
+              done 
             fi
             continue
           done < branches.txt
