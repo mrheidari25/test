@@ -128,14 +128,14 @@ jobs:
               for ((i=1; i <= $maxRetries; i++)); do
                 if gh pr view $prURL &>/dev/null; then
                   echo "  Closing the PR..."
-                  #gh pr close $prURL
-                  #git push origin --delete $branch
-                  #echo "  Branch $branch archived and deleted."
+                  gh pr close $prURL
+                  git push origin --delete $branch
+                  echo "  Branch $branch archived and deleted."
                   break
                 fi
                   echo "  Waiting for PR $prURL to be created. Retrying in $retryInterval seconds..."
                   sleep $retryInterval
-              done 
+              done              
             fi
             continue
           done < branches.txt
