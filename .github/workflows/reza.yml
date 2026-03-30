@@ -45,7 +45,8 @@ jobs:
 
           # Loop through branches
           while read branch; do
-          
+            echo "Reza check the following branch........."$branch          
+            
             # Skip main branch
             if [ "$branch" = "master" ] || [ "$branch" = "main" ]; then
               echo "  Main branch: ${branch}. Skipping..."
