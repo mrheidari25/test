@@ -1,1 +1,10 @@
+name: Reza Archives Old Branches 250426
 
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 4 1 */6 *' # At 04:00 on the 1st of every 3rd month.
+
+jobs:
+  ArchiveStaleBranches:
+    runs-on: ubuntu-latest
