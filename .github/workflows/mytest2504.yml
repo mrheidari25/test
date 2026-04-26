@@ -16,3 +16,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Needed to retrieve full commit log
+
+      - name: List files
+        run: ls
