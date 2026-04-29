@@ -1,20 +1,29 @@
 name: Reza Original YML
-on: 
+on:
   workflow_dispatch:
 jobs:
   RezaOriginalArchiveOldBranches:
     runs-on: ubuntu-latest
-    permissions: 
+    permissions:
       contents: write
       pull-requests: write
+      
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+          with:
+            fetch-depth: 0
       - name: Setup Python
         uses: actions/python@v5
         with:
           python-version: '3.x'
+          
+      - name: Install Python Dependencies
+        run: |
+        python -m pip install --upgrade pip google-genai
+        
+      #- name: 
+
+        
         
     
