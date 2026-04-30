@@ -2,7 +2,8 @@ name: hello cleanup
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "* * 1 * *"
+#    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 jobs:
