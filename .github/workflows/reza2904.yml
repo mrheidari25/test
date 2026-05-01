@@ -47,6 +47,8 @@ jobs:
                     echo "Processing $branch"
           done
 
+          echo "Next..................."
+
           git branch -r |  grep -v '\->' | sed 's/origin\///' | while read branch; do
                     echo "Processing $branch"
           done
