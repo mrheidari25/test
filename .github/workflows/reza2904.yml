@@ -46,7 +46,7 @@ jobs:
             echo "Reza inside the loop checking the branch {$branch}"
             #Skip main branch
             if [ "$branch" = "main" ] || [ "$branch" = "master" ]; then
-              echo "Main branch: ${branch}. Skipping..."
+              echo "Skipping the branch: ${branch} ......"
               continue
             fi
             echo "Reza this branch is not main: {$branch}"
