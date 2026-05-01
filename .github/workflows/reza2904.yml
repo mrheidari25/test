@@ -33,15 +33,16 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           GEMINI_API_KEY: ${{secrets.GEMINI_API_KEY}}
         run: |
+          echo "Reza ........"
           AGE_CUTOFF=800 #In days
           Main_Branch=main
 
           # Fetch all branches
           git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
 
-          echo "Reza ........"
           # Loop through branches
           while read branch; do
+            echo "Reza ........inside"
             echo "  Main branch: ${branch}. Skipping..."
           done
           
