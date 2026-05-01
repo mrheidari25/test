@@ -37,37 +37,13 @@ jobs:
           AGE_CUTOFF=800 #In days
           Main_Branch=main
           
-          git branch -r | while read branch; do
-                    echo "Processing $branch"
-          done
-
-          echo "Next..................."
-
-          git branch -r |  grep -v '\->' | while read branch; do
-                    echo "Processing $branch"
-          done
-
-          echo "Next..................."
-
-          git branch -r |  grep -v '\->' | sed 's/origin\///' | while read branch; do
-                    echo "Processing $branch"
-          done
-          
-          # Fetch all branches
-          git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
-
-          # Loop through branches
-          while read branch; do
-            echo "Processing $branch"
-          done < branches.txt
-          
           #Fetch all branches
           git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
 
           #Loop through branches
           while read branch; do
             echo $branch
-          done
+          done < branches.txt
  
         
 
