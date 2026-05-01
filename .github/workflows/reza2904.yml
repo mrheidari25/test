@@ -36,7 +36,11 @@ jobs:
           echo "Reza ........"
           AGE_CUTOFF=800 #In days
           Main_Branch=main
-
+          
+          git branch -r | while read branch; do
+                    echo "Processing $branch"
+          done
+          
           # Fetch all branches
           git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
 
