@@ -44,6 +44,11 @@ jobs:
           #Loop through branches
           while read branch; do
             echo $branch
+            #Skip main branch
+            if []||[]; then
+              echo "Main branch: ${branch}. Skipping..."
+              continue
+            fi
           done < branches.txt
  
         
