@@ -49,6 +49,7 @@ jobs:
               echo "Main branch: ${branch}. Skipping..."
               continue
             fi
+            echo "Reza this branch is not main: {$branch}"
           done < branches.txt
 
         
