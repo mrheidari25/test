@@ -42,7 +42,7 @@ jobs:
           #Loop through branches
           while read branch; do
             echo $branch
-          fi
+          done
  
         
 
