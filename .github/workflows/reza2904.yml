@@ -43,19 +43,13 @@ jobs:
 
           #Loop through branches
           while read branch; do
-            echo $branch
+            echo "Reza inside the loop checking the branch {$branch}
             #Skip main branch
-            if []||[]; then
+            if ["$branch"="main"]||["$branch"="master"]; then
               echo "Main branch: ${branch}. Skipping..."
               continue
             fi
           done < branches.txt
- 
-        
-
-          
-        
-      #- name: 
 
         
         
