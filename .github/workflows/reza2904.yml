@@ -58,9 +58,8 @@ jobs:
 
           # Loop through branches
           while read branch; do
-            echo "Reza ........inside"
-            echo "  Main branch: ${branch}. Skipping..."
-          done
+            echo "Processing $branch"
+          done < branches.txt
           
           #Fetch all branches
           git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
