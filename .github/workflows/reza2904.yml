@@ -57,7 +57,7 @@ jobs:
               echo "There exist ${open_prs} PR for branch ${branch}"
               continue
             else
-              #echo "${open_prs}"
+              echo "${open_prs}"
             fi 
 
             
