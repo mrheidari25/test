@@ -50,6 +50,16 @@ jobs:
               continue
             fi
             echo "Reza this branch is not main: {$branch}"
+
+            #Skip if open PR exits
+            open_prs=$(gh pr list --head"$branch" --json number --jq 'length') 
+            if ["$open_prs" -gt 0]; the
+              echo "There exists an open PR for branch $branch..."
+              continue
+            else
+              echo "The branch {$branch} has {$open_prs}..."
+            fi
+            
           done < branches.txt
 
         
