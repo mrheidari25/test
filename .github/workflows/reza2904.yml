@@ -54,10 +54,9 @@ jobs:
             #Skip if open PR exits
             open_prs=$(gh pr list --head "$branch" --json number --jq 'length')
             if [ $(open_prs) -gt 0 ] then; then
-              echo "There exist ${open_prs} PR for bbranch ${branch}"
+              echo "There exist ${open_prs} PR for branch ${branch}"
             else
               echo "${open_prs}"
-              echo "There exist ${open_prs} PR for bbranch ${branch}"
             fi 
 
             
