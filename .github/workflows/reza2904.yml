@@ -51,7 +51,7 @@ jobs:
             echo "Reza this branch is not main: {$branch}"
 
             #Skip if open PR exits
-            open_prs=$(gh pr list --head "$branch" --json number --jq 'length')#            
+            open_prs=$(gh pr list --head "$branch" --json number --jq 'length')           
             if [ ${open_prs} -gt 0 ]; then
               continue
             fi 
