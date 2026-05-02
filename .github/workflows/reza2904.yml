@@ -50,6 +50,9 @@ jobs:
             fi
             echo "Reza this branch is not main: {$branch}"
 
+            #Skip if open PR exits
+            open_prs=$(gh pr list --head "$branch" --json number --jq 'length')
+
 
 
             
