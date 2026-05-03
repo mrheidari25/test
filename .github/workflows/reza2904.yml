@@ -60,9 +60,9 @@ jobs:
             #Get last commit date
 
             #lastCommitDate=$(gh api repos/${{ github.repository }}/commits/$branch --jq '.commit.committer.date')
-            lastCommitSate=$(gh api repos/${{ github.repository }}/commits/$branch --jq '.commit.commiter.date')
+            lastCommitDate=$(gh api repos/${{ github.repository }}/commits/$branch --jq '.commit.committer.date')
             echo ${{ github.repository }}
-            echo $lastCommitSate
+            echo $lastCommitDate
 
             
           done < branches.txt
