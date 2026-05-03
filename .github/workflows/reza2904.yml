@@ -64,7 +64,7 @@ jobs:
             
             #Calculate branch age in days 
             branchAgeDays=$(( $(date -u +%s) - $(date -u -d "$lastCommitDate" +%s) / 86400 ))
-            echo $lastCommitDate
+            echo $branchAgeDays
             
           done < branches.txt
 
