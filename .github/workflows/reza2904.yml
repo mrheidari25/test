@@ -58,8 +58,11 @@ jobs:
             fi
 
             #Get last commit date
-            lastCommitSate =  $(gh api ${{ github.repository }} --jq '.commit.commiter.date')
-             echo $lastCommitSate
+
+            #lastCommitDate=$(gh api repos/${{ github.repository }}/commits/$branch --jq '.commit.committer.date')
+            lastCommitSate=$(gh api repos/${{ github.repository }}/commits/$branch --jq '.commit.commiter.date')
+            echo ${{ github.repository }}
+            echo $lastCommitSate
 
             
           done < branches.txt
