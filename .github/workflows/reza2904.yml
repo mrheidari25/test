@@ -58,12 +58,13 @@ jobs:
             fi
 
             #Get last commit date
-
-            #lastCommitDate=$(gh api repos/${{ github.repository }}/commits/$branch --jq '.commit.committer.date')
             lastCommitDate=$(gh api repos/${{ github.repository }}/commits/$branch --jq '.commit.committer.date')
             echo ${{ github.repository }}
             echo $lastCommitDate
-
+            
+            #Calculate branch age in days 
+            branchAgeDays=$(( $(date -u +%s) - $(date -u -d "$lastCommitDate" +%s) / 86400 ))
+            echo $lastCommitDate
             
           done < branches.txt
 
