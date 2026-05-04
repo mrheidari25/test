@@ -73,7 +73,9 @@ jobs:
             fi
             echo "Archeiving the branch $branch since it is $branchAgeDays days old."
 
-            commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
+            githubrepo=${{ github.repository }}
+            echo $githubrepo
+            #commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
             #commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
             #commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
             #echo $commitCount
