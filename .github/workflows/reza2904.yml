@@ -75,7 +75,7 @@ jobs:
 
             githubrepo=${{ github.repository }}
             echo $githubrepo
-            #commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
+            commitCount=$(gh api repos/mrheidari25/test/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
             #commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
             #commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
             #echo $commitCount
