@@ -65,6 +65,13 @@ jobs:
             #Calculate branch age in days 
             branchAgeDays=$(( ($(date -u +%s) - $(date -u -d "$lastCommitDate" +%s)) / 86400 ))
             echo $branchAgeDays
+
+            #Check whether the branch is old enough
+            if [ $branchAgeDays -lt $AGE_CUTOFF ]; then
+              echo "Skipping the branch $branch since it is still active. Last commit $branchAgeDays days ago."
+              continue
+            fi
+            echo "Archeiving the branch $branch since it is $branchAgeDays days old."
             
           done < branches.txt
 
