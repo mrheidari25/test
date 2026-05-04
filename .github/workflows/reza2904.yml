@@ -34,7 +34,7 @@ jobs:
           
         run: |
           echo "Reza ........"
-          AGE_CUTOFF=800 #In days
+          AGE_CUTOFF=10 #In days
           Main_Branch=main
           
           #Fetch all branches
