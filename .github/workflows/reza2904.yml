@@ -35,7 +35,7 @@ jobs:
         run: |
           echo "Reza ........"
           AGE_CUTOFF=10 #In days
-          Main_Branch=main
+          MAIN_BRANCH=main
           
           #Fetch all branches
           git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
