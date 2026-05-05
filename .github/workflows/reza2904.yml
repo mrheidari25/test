@@ -77,10 +77,10 @@ jobs:
             echo $githubrepo
             echo $MAIN_BRANCH
             echo $branch 
-            commitCount=$(gh api repos/mrheidari25/test/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
+            #commitCount=$(gh api repos/mrheidari25/test/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
             #commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
-            #commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
-            #echo $commitCount
+            commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
+            echo $commitCount
             
           done < branches.txt
 
