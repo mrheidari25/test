@@ -78,7 +78,8 @@ jobs:
             commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
             echo $commitCount
 
-            if [ $commitCount -gt 0 ]; then
+            #if [ $commitCount -gt 0 ]; then
+            if [ 4 -gt 0 ]; then            
               echo "yes...."
               #Format the last commit date
               lastCommitDateF=$(date -u -d "$lastCommitDate" +%B %d, %Y)
