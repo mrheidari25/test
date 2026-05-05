@@ -71,14 +71,10 @@ jobs:
               echo "Skipping the branch $branch since it is still active. Last commit $branchAgeDays days ago."
               continue
             fi
+
             echo "Archeiving the branch $branch since it is $branchAgeDays days old."
 
-            githubrepo=${{ github.repository }}
-            echo $githubrepo
-            echo $MAIN_BRANCH
-            echo $branch 
-            #commitCount=$(gh api repos/mrheidari25/test/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
-            #commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
+            #Get number of new commits
             commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
             echo $commitCount
             
