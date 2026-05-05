@@ -79,9 +79,10 @@ jobs:
             echo $commitCount
 
             if [ $commitCount -gt 0 ]; then
+              echo "yes...."
               #Format the last commit date
-              lastComiitDateF=$(date -u -d "$lastCommitDate" +%B %d, %Y)
-              echo $lastComiitDateF
+              lastCommitDateF=$(date -u -d "$lastCommitDate" +%B %d, %Y)
+              echo $lastCommitDateF
             fi
             
           done < branches.txt
