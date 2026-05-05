@@ -77,6 +77,12 @@ jobs:
             #Get number of new commits
             commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
             echo $commitCount
+
+            if [ $commitCount -gt 0 ]; then
+              #Format the last commit date
+              lastComiitDateF=$(date -u -d "$lastCommitDate" +%B %d, %Y)
+              echo $lastComiitDateF
+            fi
             
           done < branches.txt
 
