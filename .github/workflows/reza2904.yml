@@ -79,7 +79,7 @@ jobs:
             echo $commitCount
 
             if [ $commitCount -gt 0 ]; then
-              echo "yes...."$commitCount
+              echo "yes...."{$commitCount}"..."{$lastCommitDate}
               #Format the last commit date
               lastCommitDateF=$(date -u -d "$lastCommitDate" +"%B %d, %Y")
               echo $lastCommitDateF
