@@ -32,7 +32,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-
+          
         run: |
           AGE_CUTOFF=360 # In days
           MAIN_BRANCH=master
+          
+          # Fetch all branches
+          git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
