@@ -42,4 +42,9 @@ jobs:
           
           # Loop through branches
           while read branch; do
+            # Skip main branch
+            if [ "$branch" = "master" ] || [ "$branch" = "main" ]; then
+              echo "  Main branch: ${branch}. Skipping..."
+              continue
+            fi
           done < branches.txt
