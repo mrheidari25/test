@@ -92,8 +92,6 @@ jobs:
                 diff=$(git diff origin/$MAIN_BRANCH...origin/$branch)
                 summary=$(python .github/workflows/create_pr_summary.py <<< "$diff")
 
-
-
                 echo $summary
               else
                 echo "  No commits between $branch and $MAIN_BRANCH. Deleting branch directly..."
