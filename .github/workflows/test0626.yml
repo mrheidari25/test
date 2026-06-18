@@ -66,7 +66,24 @@ jobs:
               echo "  Branch $branch is still active. Last commit $branchAgeDays days ago. Skipping..."
             else
               echo "  Branch $branch is $branchAgeDays days old. Archiving..."
+                        
+              # Get number of new commits
+              commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
+
+              if [ $commitCount -gt 0 ]; then
+                # Format the last commit date
+                lastCommitDateF=$(date -u -d "$lastCommitDate" +"%B %d, %Y")
+
+                # Get the first commit date (index 0 is the oldest commit in the diff)
+                firstCommitDate=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[0].commit.committer.date')
+                firstCommitDateF=$(date -u -d "$firstCommitDate" +"%B %d, %Y")
+              else
+                echo "  No commits between $branch and $MAIN_BRANCH. Deleting branch directly..."
+                #REZA git push origin --delete $branch
+              fi
             fi
+
+            
             
           done < branches.txt
 
