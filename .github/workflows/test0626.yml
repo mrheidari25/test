@@ -107,6 +107,18 @@ jobs:
                 echo "  Create PR for ${branch}..."
                 gh pr create --title "[Archive] Branch \"$branch\"" --body "$prBody" --base $MAIN_BRANCH --head $branch >/dev/null 2>&1 || true
 
+                for ((i=1; i <= $maxRetries; i++)); do
+                if gh pr view $prURL &>/dev/null; then
+                  echo "  Closing the PR..."
+                  gh pr close $prURL
+                  #REZA git push origin --delete $branch
+                  echo "  Branch $branch archived and deleted."
+                  break
+                fi
+                  echo "  Waiting for PR $prURL to be created. Retrying in $retryInterval seconds..."
+                  sleep $retryInterval
+                done
+
                 #echo $summary
               else
                 echo "  No commits between $branch and $MAIN_BRANCH. Deleting branch directly..."
