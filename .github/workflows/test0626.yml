@@ -37,7 +37,11 @@ jobs:
           #REZA AGE_CUTOFF=360 # In days
           #REZA Please remove the following line
           AGE_CUTOFF=10 # In days          
-          MAIN_BRANCH=master
+
+          #REZA MAIN_BRANCH=master
+          #REZA Please remove the following line
+          MAIN_BRANCH=main
+
           
           # Fetch all branches
           git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
@@ -70,12 +74,23 @@ jobs:
               echo "  Branch $branch is $branchAgeDays days old. Archiving..."
                         
               # Get number of new commits
+              
               commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
 
-            fi
+              if [ $commitCount -gt 0 ]; then
+                # Format the last commit date
+                lastCommitDateF=$(date -u -d "$lastCommitDate" +"%B %d, %Y")
 
-            
-            
+                # Get the first commit date (index 0 is the oldest commit in the diff)
+                firstCommitDate=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[0].commit.committer.date')
+                firstCommitDateF=$(date -u -d "$firstCommitDate" +"%B %d, %Y")
+                
+              else
+                echo "  No commits between $branch and $MAIN_BRANCH. Deleting branch directly..."
+                #REZA git push origin --delete $branch
+              fi
+
+            fi
           done < branches.txt
 
 
