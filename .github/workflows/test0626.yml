@@ -92,16 +92,7 @@ jobs:
                 summary=$(python .github/workflows/create_pr_summary.py <<< "$diff")
                 echo $summary
 
-                # Create the PR body with contributors
-                prBody="## **Archiving branch \`$branch\`**
-                - **Last commit on:** $lastCommitDateF
-                - **First commit on:** $firstCommitDateF  
-                - **Total number of commits:** $commitCount  
-                - **Contributors:**  
-                $contributors  
-                ## Changes Summary  
-                *(Generated using Gemini AI)*  
-                $summary"
+
                 
               else
                 echo "  No commits between $branch and $MAIN_BRANCH. Deleting branch directly..."
