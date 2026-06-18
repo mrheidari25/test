@@ -107,6 +107,11 @@ jobs:
                 echo "  Create PR for ${branch}..."
                 gh pr create --title "[Archive] Branch \"$branch\"" --body "$prBody" --base $MAIN_BRANCH --head $branch >/dev/null 2>&1 || true
 
+                # Wait for the PR to be created and close it
+                maxRetries=5
+                retryInterval=5  # seconds
+                prURL=$(gh pr list --head "$branch" --state open --json url --jq '.[0].url')
+
                 for ((i=1; i <= $maxRetries; i++)); do
                   if gh pr view $prURL &>/dev/null; then
                     echo "  Closing the PR..."
