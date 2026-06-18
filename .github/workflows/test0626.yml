@@ -110,8 +110,6 @@ jobs:
                 # Wait for the PR to be created and close it
                 maxRetries=5
                 retryInterval=5  # seconds
-                prURL=$(gh pr list --head "$branch" --state open --json url --jq '.[0].url')
-
 
 
                 #echo $summary
