@@ -102,7 +102,11 @@ jobs:
                 ## Changes Summary  
                 *(Generated using Gemini AI)*  
                 $summary"
-                
+
+                # Create PR, close PR, and delete the branch
+                echo "  Create PR for ${branch}..."
+                gh pr create --title "[Archive] Branch \"$branch\"" --body "$prBody" --base $MAIN_BRANCH --head $branch >/dev/null 2>&1 || true
+
                 #echo $summary
               else
                 echo "  No commits between $branch and $MAIN_BRANCH. Deleting branch directly..."
