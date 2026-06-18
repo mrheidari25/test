@@ -103,7 +103,7 @@ jobs:
                 *(Generated using Gemini AI)*  
                 $summary"
                 
-                echo $summary
+                #echo $summary
               else
                 echo "  No commits between $branch and $MAIN_BRANCH. Deleting branch directly..."
                 #REZA git push origin --delete $branch
