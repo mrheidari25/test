@@ -34,7 +34,9 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           
         run: |
-          AGE_CUTOFF=360 # In days
+          #REZA AGE_CUTOFF=360 # In days
+          #REZA Please remove the following line
+          AGE_CUTOFF=10 # In days          
           MAIN_BRANCH=master
           
           # Fetch all branches
@@ -77,6 +79,8 @@ jobs:
                 # Get the first commit date (index 0 is the oldest commit in the diff)
                 firstCommitDate=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[0].commit.committer.date')
                 firstCommitDateF=$(date -u -d "$firstCommitDate" +"%B %d, %Y")
+
+                
               else
                 echo "  No commits between $branch and $MAIN_BRANCH. Deleting branch directly..."
                 #REZA git push origin --delete $branch
