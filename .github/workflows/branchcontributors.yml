@@ -1,7 +1,7 @@
-name: Collect Contributors to Old Branches
+name: Finding Old Branches & Collecting Contributors  
 
 on:
-  workflow_dispatch:
+  workflow_dispatch
 
 jobs:
   ArchiveStaleBranches:
