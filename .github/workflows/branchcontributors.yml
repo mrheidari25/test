@@ -1,4 +1,4 @@
-name: test0625
+name: Collect Contributors to Old Branches
 
 on:
   workflow_dispatch:
