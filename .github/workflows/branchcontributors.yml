@@ -85,7 +85,8 @@ jobs:
                 firstCommitDateF=$(date -u -d "$firstCommitDate" +"%B %d, %Y")
 
                 # Get contributors to the branch
-                contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "  - \(.commit.author.name) (@\(.author.login))  "' | sort | uniq)
+                #contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "  - \(.commit.author.name) (@\(.author.login))  "' | sort | uniq)
+                contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '[.commits[] | select(.author != null) | .author.login] | unique | map("@"+.) | join("\n")')
                 
                 echo $contributors
               else
