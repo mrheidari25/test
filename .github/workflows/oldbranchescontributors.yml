@@ -64,8 +64,8 @@ jobs:
               
               # Get contributors to the branch
               contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "  - \(.commit.author.name) (@\(.author.login))  "' | sort | uniq)
-              contributorsList+="Reza"
-              #contributorsList+=contributors
+              #contributorsList+="Reza"
+              contributorsList+="${contributors}"
             fi
           done < branches.txt
           echo "List of contributors to the old branches: ${contributorsList[@]}"
