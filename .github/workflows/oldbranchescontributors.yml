@@ -60,8 +60,7 @@ jobs:
               BLUE='\033[34m'
               RED='\033[31m'
               GREEN='\033[32m'
-              NC='\033[0m'    # No Color
-	      echo "B"
+              NC='\033[0m'
             fi
           done < branches.txt
  
