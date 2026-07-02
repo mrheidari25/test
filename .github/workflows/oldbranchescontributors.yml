@@ -64,7 +64,7 @@ jobs:
               
               # Get contributors to the branch
               contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "  - \(.commit.author.name) (@\(.author.login))  "' | sort | uniq)
-	      echo "BRANCH"
+              echo "B"
               #contributorsList+="Reza"
               #contributorsList+=contributors
             fi
