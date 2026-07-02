@@ -29,8 +29,6 @@ jobs:
           #MAIN_BRANCH=master
           MAIN_BRANCH=main
 
-          echo "This is the workflow of Reza"
-
           # Fetch all branches
           git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
 
