@@ -63,7 +63,7 @@ jobs:
               echo "  Branch $branch is $branchAgeDays days old. Archiving..."
               
               # Get contributors to the branch
-              contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "   \(.commit.author.name) (@\(.author.login))  "' | sort | uniq)
+              contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))  "' | sort | uniq)
 
               echo "BRANCH = ${branch}    OWNER = ${contributors}"
               #contributorsList+="Reza"
