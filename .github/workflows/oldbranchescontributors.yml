@@ -43,7 +43,6 @@ jobs:
             # Skip if open PR exists
             open_prs=$(gh pr list --head "$branch" --json number --jq 'length')
             if [ "$open_prs" -gt 0 ]; then
-              echo "There exists an open PR for branch $branch..."
               continue
             fi
 
@@ -58,10 +57,12 @@ jobs:
               # Get contributors to the branch
               contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort | uniq)
 
-              echo "--- BRANCH = ${branch} --- AGE = ${branchAgeDays} days old ---  OWNER = ${contributors} ---"
-              #contributorsList+="Reza"
-              #contributorsList+=contributors
+              BLUE='\033[34m'
+              RED='\033[31m'
+              GREEN='\033[32m'
+              NC='\033[0m'    # No Color
+
+	      printf "BRANCH = ${BLUE}%-30s${NC}  AGE = ${RED}%5s${NC} days  OWNER = ${GREEN}%-20s${NC}\n" "$branch" "$branchAgeDays" "$contributors"
             fi
           done < branches.txt
-          #echo "List of contributors to the old branches: ${contributorsList[@]}"
  
