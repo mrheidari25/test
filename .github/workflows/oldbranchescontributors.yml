@@ -56,6 +56,11 @@ jobs:
             if [ $branchAgeDays -ge $AGE_CUTOFF ]; then
               # Get contributors to the branch
               contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort | uniq)
+
+              BLUE='\033[34m'
+              RED='\033[31m'
+              GREEN='\033[32m'
+              NC='\033[0m'    # No Color
             fi
           done < branches.txt
  
