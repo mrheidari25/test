@@ -62,6 +62,7 @@ jobs:
               GREEN='\033[32m'
               NC='\033[0m'
               echo "BRANCH"
-          fi
+	      printf "BRANCH = ${BLUE}%-30s${NC}  AGE = ${RED}%5s${NC} days  OWNER = ${GREEN}%-20s${NC}\n" "$branch" "$branchAgeDays" "$contributors"
+            fi
           done < branches.txt
  
