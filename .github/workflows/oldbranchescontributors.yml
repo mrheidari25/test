@@ -1,10 +1,10 @@
-name: Finding Old Branches & Collecting Contributors
+name: Reza
 
 on:
   workflow_dispatch:
 
 jobs:
-  FindingOldBranchesAndCollectingContributors:
+  RezaArchivingStaleBranches:
     runs-on: ubuntu-latest
     permissions:
       contents: write # Needed for branch deletion
@@ -12,10 +12,9 @@ jobs:
     steps:
       - name: Checkout
         #uses: actions/checkout@v4
-        uses: actions/checkout
-		with:
+        uses: actions/checkout@v6.0.2
+        with:
           fetch-depth: 0  # Needed to retrieve full commit log
-
       - name: Setup Python
         uses: actions/setup-python@v6.2.0
         with:
