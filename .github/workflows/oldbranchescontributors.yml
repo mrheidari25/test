@@ -26,7 +26,8 @@ jobs:
         run: |
           #AGE_CUTOFF=360 # In days
           AGE_CUTOFF=10 # In days
-          MAIN_BRANCH=master
+          #MAIN_BRANCH=master
+          MAIN_BRANCH=main
 
           echo "This is the workflow of Reza"
 
