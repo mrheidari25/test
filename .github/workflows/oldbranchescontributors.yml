@@ -1,10 +1,10 @@
-name: Reza
+name: Pick Old Branches & Owners
 
 on:
   workflow_dispatch:
 
 jobs:
-  RezaArchivingStaleBranches:
+  PickOldBranchesOwners:
     runs-on: ubuntu-latest
     permissions:
       contents: write # Needed for branch deletion
