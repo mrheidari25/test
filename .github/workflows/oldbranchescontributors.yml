@@ -34,7 +34,7 @@ jobs:
           # Fetch all branches
           git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
 
-          contributorsList=()
+          #contributorsList=()
           # Loop through branches
           while read branch; do
             # Skip main branch
@@ -64,7 +64,7 @@ jobs:
               
               # Get contributors to the branch
               contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "  - \(.commit.author.name) (@\(.author.login))  "' | sort | uniq)
-	      contributorsList+=contributors
+	      #contributorsList+=contributors
             fi
-	    echo "${contributorsList[@]}"
           done < branches.txt
+          #echo "${contributorsList[@]}"
