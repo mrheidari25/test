@@ -34,7 +34,7 @@ jobs:
           # Fetch all branches
           git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
 
-          #oldBranchesList={}
+          contributorsList=()
           # Loop through branches
           while read branch; do
             # Skip main branch
@@ -64,10 +64,9 @@ jobs:
               
               # Get contributors to the branch
               contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "  - \(.commit.author.name) (@\(.author.login))  "' | sort | uniq)
-	      #echo "BRANCH = "${branch}    OWNER = ${contributors}"
-              #contributorsList+="Reza"
-              #contributorsList+="${contributors}"
+              contributorsList+="Reza"
+              #contributorsList+=contributors
             fi
           done < branches.txt
-          #echo "List of contributors to the old branches: ${contributorsList[@]}"
+          echo "List of contributors to the old branches: ${contributorsList[@]}"
  
