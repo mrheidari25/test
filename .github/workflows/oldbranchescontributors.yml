@@ -6,9 +6,6 @@ on:
 jobs:
   PickOldBranchesOwners:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write # Needed for branch deletion
-      pull-requests: write
     steps:
       - name: Checkout
         #uses: actions/checkout@v4
