@@ -1,0 +1,36 @@
+name: Finding Old Branches & Collecting Contributors
+
+on:
+  workflow_dispatch:
+
+jobs:
+  FindingOldBranches>AndCollectingContributors:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Needed for branch deletion
+      pull-requests: write
+    steps:
+      - name: Checkout
+        #uses: actions/checkout@v4
+        uses: actions/checkout@v6.0.2
+	with:
+          fetch-depth: 0  # Needed to retrieve full commit log
+
+      - name: Setup Python
+        uses: actions/setup-python@v6.2.0
+        with:
+          python-version: '3.x'
+
+      - name: Install GitHub CLI
+        run: sudo apt-get install -y gh
+
+      - name: Find Stale Branches and List Contributors
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          #GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+        run: |
+          AGE_CUTOFF=360 # In days
+          MAIN_BRANCH=master
+
+          echo "This is the workflow of Reza"
