@@ -63,6 +63,6 @@ jobs:
               NC='\033[0m'
               echo "BRANCH"	      
               printf "RRR"
-              printf "${BLUE}%-30s BRANCH = ${NC}  AGE = ${RED}%5s${NC} days  OWNER = ${GREEN}%-20s${NC}\n" "$branch" "$branchAgeDays" "$contributors"
+              printf "BRANCH=${BLUE}%-30s${NC}  AGE=${RED}%5s${NC} days old OWNER=${GREEN}%-20s${NC}\n" "$branch" "$branchAgeDays" "$contributors"
           fi
           done < branches.txt
