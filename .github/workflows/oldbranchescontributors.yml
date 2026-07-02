@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  FindingOldBranches>AndCollectingContributors:
+  FindingOldBranchesAndCollectingContributors:
     runs-on: ubuntu-latest
     permissions:
       contents: write # Needed for branch deletion
