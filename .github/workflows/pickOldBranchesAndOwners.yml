@@ -79,7 +79,8 @@ jobs:
               mentions=$(echo "$contributors" | sed 's/^/@/')
               news="The branch ${branch} has been inactive for ${branchAgeDays} days."
               warning="If you are still using this branch, please let us know. Otherwise, we plan to delete it."
-              message="${mentions} ${news} ${warning}"	      	  	      
+              message="${mentions} ${news} ${warning}"
+              echo $message
               #gh issue create  --title "Stale branch: ${branch}"  --body ${messgae}
             fi
           done < branches.txt
