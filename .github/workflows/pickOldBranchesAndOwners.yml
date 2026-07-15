@@ -81,6 +81,7 @@ jobs:
               warning="If you are still using this branch, please let us know. Otherwise, we plan to delete it."
               message="${mentions} ${news} ${warning}"
               #echo $message
-              gh issue create  --title "Stale branch: ${branch}"  --body ${messgae}
+              gh issue create  --title "Stale branch: ${branch}"  --body "text"
+#              gh issue create  --title "Stale branch: ${branch}"  --body ${messgae}
             fi
           done < branches.txt
