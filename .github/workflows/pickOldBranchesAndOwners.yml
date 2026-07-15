@@ -72,5 +72,9 @@ jobs:
               #gh issue create --title "Test Notification15" --body "@RezaUHH should receive a notification"
               #gh issue create --title "Test Notification16" --body "@RezaUHH should receive a notification" --assignee RezaUHH
               #gh issue create --title "Test Notification13" --body "should receive a notification"
+
+
+              #create an issue
+              #contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort | uniq)
             fi
           done < branches.txt
