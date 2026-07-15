@@ -82,7 +82,3 @@ jobs:
               message="${mentions} ${news} ${warning}"
             fi
           done < branches.txt
-	  
-	      
-              #gh issue create  --title "Stale branch: ${branch}"  --body ${messgae}
-
