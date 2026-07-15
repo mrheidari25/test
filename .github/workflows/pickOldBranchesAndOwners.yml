@@ -6,6 +6,9 @@ on:
 jobs:
   PickOldBranchesAndOwners:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.2
