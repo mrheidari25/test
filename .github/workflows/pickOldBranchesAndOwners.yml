@@ -76,8 +76,5 @@ jobs:
 
               #create an issue
               contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort | uniq)
-              mentions=$(echo "$contributors" | sed 's/^/@/')
-	      news="The branch ${branch} has been inactive for ${branchAgeDays} days."
-
             fi
           done < branches.txt
