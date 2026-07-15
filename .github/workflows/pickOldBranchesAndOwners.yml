@@ -78,5 +78,6 @@ jobs:
               contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort | uniq)
               mentions=$(echo "$contributors" | sed 's/^/@/')
               news="The branch ${branch} has been inactive for ${branchAgeDays} days."
+	      warning="If you are still using this branch, please let us know. Otherwise, we plan to delete it."
             fi
           done < branches.txt
