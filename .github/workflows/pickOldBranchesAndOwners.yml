@@ -65,6 +65,7 @@ jobs:
               printf "BRANCH=${BLUE}%-20s${NC} AGE=${RED}%-20s${NC} OWNER=${GREEN}%s${NC}\n" "$branch" "${branchAgeDays} days old" "$contributors"
 
               #create an issue
-              gh issue create --title "Test Notification11" --body "@RezaUHH should receive a notification" --assignee RezaUHH
+              #gh issue create --title "Test Notification11" --body "@RezaUHH should receive a notification" --assignee RezaUHH
+              gh issue create --title "Test Notification11" --body "should receive a notification"
             fi
           done < branches.txt
