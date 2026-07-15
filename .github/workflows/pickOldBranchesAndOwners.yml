@@ -69,6 +69,6 @@ jobs:
 
               #create an issue
               #gh issue create --title "Test Notification11" --body "@RezaUHH should receive a notification" --assignee RezaUHH
-              gh issue create --title "Test Notification11" --body "should receive a notification"
+              gh issue create --title "Test Notification13" --body "should receive a notification"
             fi
           done < branches.txt
