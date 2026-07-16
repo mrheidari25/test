@@ -87,5 +87,5 @@ jobs:
               issueBody+=$'\n'
             fi
           done < branches.txt
-#          issueBody+=$'\n```'
+          issueBody+=$'\n```'
           gh issue create  --title "Report of Old Branches"  --body "$issueBody"    
