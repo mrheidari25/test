@@ -83,7 +83,8 @@ jobs:
               #gh issue create --title "Stale branch: ${branch}" --body "${message}"
 
               issueBody=$'## Old Branches\n\n```text\nBRANCH                 AGE                  OWNER\n---------------------------------------------------------------\n'
-              issueBody+="$(printf '| `%s` | 🔴 %s days old | 🟢 %s |\n' "$branch" "$branchAgeDays" "$contributors")"
+              #issueBody+="$(printf '| `%s` | 🔴 %s days old | 🟢 %s |\n' "$branch" "$branchAgeDays" "$contributors")"
+              issueBody+="$(printf '%-20s 🔴 %-15s 🟢 %s\n' "$branch" "$branchAgeDays days old" "$contributors")"
               issueBody+=$'\n```'
 
               gh issue create  --title "Report of Old Branches"  --body "$issueBody"    
