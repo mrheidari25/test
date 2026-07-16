@@ -37,6 +37,7 @@ jobs:
           git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
 
           contributorsList=()
+          issueBody=$'## Old Branches\n\n```text\nBRANCH                 AGE                  OWNER\n---------------------------------------------------------------\n'
           # Loop through branches
           while read branch; do
             # Skip main branch
@@ -82,11 +83,9 @@ jobs:
               message="${mentions} ${news} ${warning}"
               #gh issue create --title "Stale branch: ${branch}" --body "${message}"
 
-              issueBody=$'## Old Branches\n\n```text\nBRANCH                 AGE                  OWNER\n---------------------------------------------------------------\n'
-              #issueBody+="$(printf '| `%s` | 🔴 %s days old | 🟢 %s |\n' "$branch" "$branchAgeDays" "$contributors")"
               issueBody+="$(printf '%-20s 🔴 %-15s 🟢 %s\n' "$branch" "$branchAgeDays days old" "$contributors")"
               issueBody+=$'\n```'
 
-              gh issue create  --title "Report of Old Branches"  --body "$issueBody"    
             fi
           done < branches.txt
+          gh issue create  --title "Report of Old Branches"  --body "$issueBody"    
