@@ -85,7 +85,7 @@ jobs:
               issueBody=$'## Old Branches\n\n```text\nBRANCH                 AGE                  OWNER\n---------------------------------------------------------------\n'
               issueBody+="$(printf '🔵 **BRANCH:** `%s`\n🔴 **AGE:** %s days old\n🟢 **OWNER:** %s\n\n' "$branch" "$branchAgeDays" "$contributors")"
               issueBody+=$'\n```'
-	      
+
               gh issue create  --title "Report of Old Branches"  --body "$issueBody"    
             fi
           done < branches.txt
