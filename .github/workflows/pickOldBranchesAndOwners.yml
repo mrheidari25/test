@@ -84,8 +84,8 @@ jobs:
               #gh issue create --title "Stale branch: ${branch}" --body "${message}"
 
               issueBody+="$(printf '%-20s 🔴 %-15s 🟢 %s\n' "$branch" "$branchAgeDays days old" "$contributors")"
-              issueBody+=$'\n```'
 
             fi
           done < branches.txt
+          issueBody+=$'\n```'
           gh issue create  --title "Report of Old Branches"  --body "$issueBody"    
