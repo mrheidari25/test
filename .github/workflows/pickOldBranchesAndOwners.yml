@@ -110,5 +110,5 @@ jobs:
 
           # Add the mentions to the issue body
           issueBody+=$'\n\n'"$mentions"
-	  
+
           gh issue create  --title "Report of Old Branches"  --body "$issueBody"    
