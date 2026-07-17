@@ -80,16 +80,16 @@ jobs:
 
 
               #create an issue
-              contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort | uniq)
+              #contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort | uniq)
+              contributors=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch"  --jq '.commits[] | "(.commit.author.name) (@\(.author.login))"' | sort -u | paste -sd ', ' -)
+
               mentions=$(echo "$contributors" | sed 's/^/@/')
               news="The branch ${branch} has been inactive for ${branchAgeDays} days."
               warning="If you are still using this branch, please let us know. Otherwise, we plan to delete it."
               message="${mentions} ${news} ${warning}"
-              #gh issue create --title "Stale branch: ${branch}" --body "${message}"
 
               issueBody+=$(printf '%-20s 🔴 %-15s 🟢 %s' "$branch" "$branchAgeDays days old" "$contributors")
               issueBody+=$'\n'
             fi
           done < branches.txt
-          #issueBody+=$'\n```'
           gh issue create  --title "Report of Old Branches"  --body "$issueBody"    
