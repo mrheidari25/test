@@ -81,7 +81,10 @@ jobs:
 
               #create an issue
               #contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort | uniq)
-              contributors=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch"  --jq '.commits[] | "(.commit.author.name) (@\(.author.login))"' | sort -u | paste -sd ', ' -)
+              contributors=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
+              contributors=$(printf '%s\n' "$contributors" | paste -sd ', ' -)
+
+              #contributors=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch"  --jq '.commits[] | "(.commit.author.name) (@\(.author.login))"' | sort -u | paste -sd ', ' -)
 
               mentions=$(echo "$contributors" | sed 's/^/@/')
               news="The branch ${branch} has been inactive for ${branchAgeDays} days."
