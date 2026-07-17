@@ -102,4 +102,7 @@ jobs:
               allContributors+="$contributorLogins"$'\n'	      
             fi
           done < branches.txt
+
+          # Remove duplicate usernames and create GitHub mentions
+          mentions=$(printf '%s\n' "$allContributors" | sed '/^null$/d' | sed '/^$/d' | sort -u | sed 's/^/@/' | paste -sd ' ' -)
           gh issue create  --title "Report of Old Branches"  --body "$issueBody"    
