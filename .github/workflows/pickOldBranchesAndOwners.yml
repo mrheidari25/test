@@ -39,7 +39,7 @@ jobs:
           contributorsList=()
           # Variable for collecting GitHub usernames
           allContributors=""
-	  
+  
           reportText="The branches listed below have been inactive for over one year. Therefore, they are scheduled for removal in 60 days. "
           reportText+="If you need any of these branches, please let us know before the deadline."
           issueBody=$'## Old Branches\n\n'"$reportText"$'\n\n```text\nBRANCH                 AGE                  OWNER\n---------------------------------------------------------------\n'
