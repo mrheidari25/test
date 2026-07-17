@@ -43,8 +43,7 @@ jobs:
           reportText="The branches listed below have been inactive for over one year. Therefore, they are scheduled for removal in 60 days. "
           reportText+="If you need any of these branches, please let us know before the deadline."
           issueBody=$'## Old Branches\n\n'"$reportText"$'\n\n```text\nBRANCH                 AGE                  OWNER\n---------------------------------------------------------------\n'
-          #issueBody=$'## Old Branches\n\n```text\nBRANCH                 AGE                  OWNER\n---------------------------------------------------------------\n'
-          #issueBody=$'## Old Branches\n\n```text\nBRANCH                 AGE                  OWNER\n---------------------------------------------------------------\n'
+
           # Loop through branches
           while read branch; do
             # Skip main branch
@@ -75,22 +74,9 @@ jobs:
               NC='\033[0m'
               printf "BRANCH=${BLUE}%-20s${NC} AGE=${RED}%-20s${NC} OWNER=${GREEN}%s${NC}\n" "$branch" "${branchAgeDays} days old" "$contributors"
 
-
               #create an issue
-              #gh issue create --title "Test Notification15" --body "@RezaUHH should receive a notification"
-              #gh issue create --title "Test Notification16" --body "@RezaUHH should receive a notification" --assignee RezaUHH
-              #gh issue create --title "Test Notification13" --body "should receive a notification"
-
-
-              #create an issue
-              #contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort | uniq)
               contributors=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
               contributors=$(printf '%s\n' "$contributors" | paste -sd ', ' -)
-
-              mentions=$(echo "$contributors" | sed 's/^/@/')
-              news="The branch ${branch} has been inactive for ${branchAgeDays} days."
-              warning="If you are still using this branch, please let us know. Otherwise, we plan to delete it."
-              message="${mentions} ${news} ${warning}"
 
               issueBody+=$(printf '%-20s 🔴 %-15s 🟢 %s' "$branch" "$branchAgeDays days old" "$contributors")
               issueBody+=$'\n'
@@ -105,6 +91,7 @@ jobs:
 
           # Remove duplicate usernames and create GitHub mentions
           mentions=$(printf '%s\n' "$allContributors" | sed '/^null$/d' | sed '/^$/d' | sort -u | sed 's/^/@/' | paste -sd ' ' -)
+
           # Close the code block
           issueBody+=$'\n```'
 
