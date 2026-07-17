@@ -105,4 +105,10 @@ jobs:
 
           # Remove duplicate usernames and create GitHub mentions
           mentions=$(printf '%s\n' "$allContributors" | sed '/^null$/d' | sed '/^$/d' | sort -u | sed 's/^/@/' | paste -sd ' ' -)
+          # Close the code block
+          issueBody+=$'\n```'
+
+          # Add the mentions to the issue body
+          issueBody+=$'\n\n'"$mentions"
+	  
           gh issue create  --title "Report of Old Branches"  --body "$issueBody"    
