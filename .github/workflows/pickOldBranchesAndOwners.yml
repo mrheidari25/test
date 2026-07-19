@@ -66,7 +66,7 @@ jobs:
             # Check whether the branch is old enough
             if [ $branchAgeDays -ge $AGE_CUTOFF ]; then
               # Get contributors to the branch
-              contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort | uniq)
+              #contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort | uniq)
               #create an issue
               #commitData=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch")
               #contributors=$(printf '%s\n' "$commitData" | jq -r '.commits[] | select(.author.login != null) | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
