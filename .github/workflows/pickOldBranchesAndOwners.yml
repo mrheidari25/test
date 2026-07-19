@@ -68,12 +68,8 @@ jobs:
               # Get contributors to the branch
               contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort | uniq)
               #create an issue
-              #commitData=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch")
-              #contributors=$(printf '%s\n' "$commitData" | jq -r '.commits[] | select(.author.login != null) | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
-              #contributors=$(printf '%s\n' "$contributors" | paste -sd ', ' -)
-
-              contributors=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[] | select(.author.login != null) | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
-              # Put all contributors on one line
+              commitData=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch")
+              contributors=$(printf '%s\n' "$commitData" | jq -r '.commits[] | select(.author.login != null) | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
               contributors=$(printf '%s\n' "$contributors" | paste -sd ', ' -)
 
               #contributors=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
@@ -86,9 +82,8 @@ jobs:
               NC='\033[0m'
               printf "BRANCH=${BLUE}%-20s${NC} AGE=${RED}%-20s${NC} OWNER=${GREEN}%s${NC}\n" "$branch" "${branchAgeDays} days old" "$contributors"
 
-              issueBody+="$(printf '| %s | 🔴 %s days old | 🟢 %s |\n' "$branch" "$branchAgeDays" "$contributors")"
-#              issueBody+=$(printf '%-20s 🔴 %-15s 🟢 %s' "$branch" "$branchAgeDays days old" "$contributors")
-#              issueBody+=$'\n'
+              issueBody+=$(printf '%-20s 🔴 %-15s 🟢 %s' "$branch" "$branchAgeDays days old" "$contributors")
+              issueBody+=$'\n'
 
               # Get only GitHub usernames for notifications
               contributorLogins=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[].author.login' | sort -u)
@@ -102,7 +97,7 @@ jobs:
           mentions=$(printf '%s\n' "$allContributors" | sed '/^null$/d' | sed '/^$/d' | sort -u | sed 's/^/@/' | paste -sd ' ' -)
           #echo $mentions
           # Close the code block
-          #issueBody+=$'\n```'
+          issueBody+=$'\n```'
 
           # Add the mentions to the issue body
           issueBody+=$'\n\n'"$mentions"
