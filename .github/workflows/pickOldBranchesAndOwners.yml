@@ -72,7 +72,8 @@ jobs:
               #contributors=$(printf '%s\n' "$commitData" | jq -r '.commits[] | select(.author.login != null) | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
               #contributors=$(printf '%s\n' "$contributors" | paste -sd ', ' -)
 
-              contributors=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[] | select(.author.login != null) | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
+              contributors=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[] | select(.author.login != null) | "@\(.author.login)"' | sort -u | paste -sd ', ' -)
+              #contributors=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[] | select(.author.login != null) | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
               contributors=$(printf '%s\n' "$contributors" | paste -sd ', ' -)
               issueBody+="$(printf '| %s | 🔴 %s days old | 🟢 %s |\n' "$branch" "$branchAgeDays" "$contributors")"
 
