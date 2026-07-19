@@ -71,7 +71,7 @@ jobs:
               commitData=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch")
               contributors=$(printf '%s\n' "$commitData" | jq -r '.commits[] | select(.author.login != null) | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
               contributors=$(printf '%s\n' "$contributors" | paste -sd ', ' -)
-	      
+
               #contributors=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
               #contributors=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[] | select(.author.login != null) | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
               #contributors=$(printf '%s\n' "$contributors" | paste -sd ', ' -)
