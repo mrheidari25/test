@@ -68,8 +68,13 @@ jobs:
               # Get contributors to the branch
               contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort | uniq)
               #create an issue
-              contributors=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
-              contributors=$(printf '%s\n' "$contributors" | paste -sd ', ' -)
+	      commitData=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch")
+	      contributors=$(printf '%s\n' "$commitData" | jq -r '.commits[] | select(.author.login != null) | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
+	      contributors=$(printf '%s\n' "$contributors" | paste -sd ', ' -)
+	      
+              #contributors=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
+              #contributors=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[] | select(.author.login != null) | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
+              #contributors=$(printf '%s\n' "$contributors" | paste -sd ', ' -)
 
               BLUE='\033[34m'
               RED='\033[31m'
@@ -95,6 +100,6 @@ jobs:
           issueBody+=$'\n```'
 
           # Add the mentions to the issue body
-          issueBody+=$'\n\n'"$mentions"
+          #issueBody+=$'\n\n'"$mentions"
 
           gh issue create  --title "Report of Old Branches"  --body "$issueBody"    
