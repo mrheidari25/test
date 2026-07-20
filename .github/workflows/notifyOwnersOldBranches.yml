@@ -36,7 +36,6 @@ jobs:
           # Fetch all branches
           git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
 
-          contributorsList=()
           # Variable for collecting GitHub usernames
           allContributors=""
   
