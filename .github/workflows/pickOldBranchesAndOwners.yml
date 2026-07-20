@@ -36,13 +36,13 @@ jobs:
           # Fetch all branches
           git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
 
-          contributorsList=()
+          #contributorsList=()
           # Variable for collecting GitHub usernames
-          allContributors=""
+          #allContributors=""
   
-          reportText="The branches listed below have been inactive for over one year. Therefore, they are scheduled for removal in 60 days. "
-          reportText+="If you need any of these branches, please let us know before the deadline."
-          issueBody=$'## Old Branches\n\n'"$reportText"$'\n\n```text\nBRANCH                 AGE                  OWNER\n---------------------------------------------------------------\n'
+          #reportText="The branches listed below have been inactive for over one year. Therefore, they are scheduled for removal in 60 days. "
+          #reportText+="If you need any of these branches, please let us know before the deadline."
+          #issueBody=$'## Old Branches\n\n'"$reportText"$'\n\n```text\nBRANCH                 AGE                  OWNER\n---------------------------------------------------------------\n'
 
           # Loop through branches
           while read branch; do
@@ -76,25 +76,25 @@ jobs:
               NC='\033[0m'
               printf "BRANCH=${BLUE}%-20s${NC} AGE=${RED}%-20s${NC} OWNER=${GREEN}%s${NC}\n" "$branch" "${branchAgeDays} days old" "$contributors"
 
-              #create an issue
-              issueBody+=$(printf '%-20s 🔴 %-15s 🟢 %s' "$branch" "$branchAgeDays days old" "$contributors")
-              issueBody+=$'\n'
-
-              # Get only GitHub usernames for notifications
-              contributorLogins=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[].author.login' | sort -u)
-
-              # Add the usernames to the global contributor list
-              allContributors+="$contributorLogins"$'\n'	      
+              ##create an issue
+              #issueBody+=$(printf '%-20s 🔴 %-15s 🟢 %s' "$branch" "$branchAgeDays days old" "$contributors")
+              #issueBody+=$'\n'
+	      #
+              ## Get only GitHub usernames for notifications
+              #contributorLogins=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[].author.login' | sort -u)
+	      #
+              ## Add the usernames to the global contributor list
+              #allContributors+="$contributorLogins"$'\n'	      
             fi
           done < branches.txt
 
-          # Remove duplicate usernames and create GitHub mentions
-          mentions=$(printf '%s\n' "$allContributors" | sed '/^null$/d' | sed '/^$/d' | sort -u | sed 's/^/@/' | paste -sd ' ' -)
-         
-          # Close the code block
-          issueBody+=$'\n```'
-
-          # Add the mentions to the issue body
-          issueBody+=$'\n\n'"$mentions"
-
-          gh issue create  --title "Report of Old Branches"  --body "$issueBody"    
+          ## Remove duplicate usernames and create GitHub mentions
+          #mentions=$(printf '%s\n' "$allContributors" | sed '/^null$/d' | sed '/^$/d' | sort -u | sed 's/^/@/' | paste -sd ' ' -)
+          #
+          ## Close the code block
+          #issueBody+=$'\n```'
+	  #
+          ## Add the mentions to the issue body
+          #issueBody+=$'\n\n'"$mentions"
+	  #
+          #gh issue create  --title "Report of Old Branches"  --body "$issueBody"    
