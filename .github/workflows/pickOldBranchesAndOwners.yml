@@ -79,7 +79,7 @@ jobs:
               ##create an issue
               #issueBody+=$(printf '%-20s 🔴 %-15s 🟢 %s' "$branch" "$branchAgeDays days old" "$contributors")
               #issueBody+=$'\n'
-	      #
+              #
               ## Get only GitHub usernames for notifications
               #contributorLogins=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[].author.login' | sort -u)
 	      #
