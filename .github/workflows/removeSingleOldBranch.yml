@@ -7,7 +7,7 @@ on:
         required: true
         default: '10' # In days
         type: number
-	
+
 jobs:
   RemoveSingleOldBranch:
     runs-on: ubuntu-latest
