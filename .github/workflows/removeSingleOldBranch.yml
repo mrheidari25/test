@@ -37,7 +37,7 @@ jobs:
           AGE_CUTOFF=${{ inputs.age_cutoff }} # In days
           #MAIN_BRANCH=master
           MAIN_BRANCH=main
-
+          echo $AGE_CUTOFF
           # Fetch all branches
           git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
 
