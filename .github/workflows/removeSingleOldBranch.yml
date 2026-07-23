@@ -2,6 +2,7 @@ name: Remove A Single Old Branch
 
 on:
   workflow_dispatch:
+    inputs:
       age_cutoff:
         description: 'Branches older than this many days'
         required: true
