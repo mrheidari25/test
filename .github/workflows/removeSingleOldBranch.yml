@@ -41,11 +41,11 @@ jobs:
 
         run: |
           branch="${{ inputs.branch_name }}"
-	  if [ -z "$branch" ]; then
+          if [ -z "$branch" ]; then
             echo "Error: No branch name was provided."
             exit 1
           fi
-	  echo $branch
+          echo $branch
 
           #AGE_CUTOFF=360 # In days
           AGE_CUTOFF=${{ inputs.age_cutoff }} # In days
