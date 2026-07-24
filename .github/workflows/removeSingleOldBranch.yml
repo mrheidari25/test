@@ -47,7 +47,6 @@ jobs:
           fi
           echo $branch
 
-          #AGE_CUTOFF=360 # In days
           AGE_CUTOFF=${{ inputs.age_cutoff }} # In days
           echo $AGE_CUTOFF
 
@@ -78,15 +77,29 @@ jobs:
 
           # Check whether the branch is old enough
           if [ $branchAgeDays -ge $AGE_CUTOFF ]; then
-            # Get contributors to the branch
-            commitData=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch")
-            contributors=$(printf '%s\n' "$commitData" | jq -r '.commits[] | select(.author.login != null) | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
-            contributors=$(printf '%s\n' "$contributors" | paste -sd ', ' -)
+            # Get number of new commits
+            commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
 
-            BLUE='\033[34m'
-            RED='\033[31m'
-            GREEN='\033[32m'
-            NC='\033[0m'
-            printf "BRANCH=${BLUE}%-20s${NC} AGE=${RED}%-20s${NC} OWNER=${GREEN}%s${NC}\n" "$branch" "${branchAgeDays} days old" "$contributors"
+            if [ $commitCount -gt 0 ]; then
+               # Format the last commit date
+               lastCommitDateF=$(date -u -d "$lastCommitDate" +"%B %d, %Y")
+
+               # Get the first commit date (index 0 is the oldest commit in the diff)
+               firstCommitDate=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[0].commit.committer.date')
+               firstCommitDateF=$(date -u -d "$firstCommitDate" +"%B %d, %Y")
+	      
+               # Get contributors to the branch
+               contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "  - \(.commit.author.name) (@\(.author.login))  "' | sort | uniq)
+
+               commitData=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch")
+               contributors=$(printf '%s\n' "$commitData" | jq -r '.commits[] | select(.author.login != null) | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
+               contributors=$(printf '%s\n' "$contributors" | paste -sd ', ' -)
+
+               BLUE='\033[34m'
+               RED='\033[31m'
+               GREEN='\033[32m'
+               NC='\033[0m'
+               printf "BRANCH=${BLUE}%-20s${NC} AGE=${RED}%-20s${NC} OWNER=${GREEN}%s${NC}\n" "$branch" "${branchAgeDays} days old" "$contributors"
+	    fi
           fi
           #done < branches.txt-----------------------------------------
