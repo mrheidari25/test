@@ -87,7 +87,7 @@ jobs:
           if [ $branchAgeDays -ge $AGE_CUTOFF ]; then
             # Get number of new commits
             commitCount=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits | length')
-
+            echo "commitCount="$commitCount
             if [ $commitCount -gt 0 ]; then
                # Format the last commit date
                lastCommitDateF=$(date -u -d "$lastCommitDate" +"%B %d, %Y")
