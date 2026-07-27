@@ -76,6 +76,7 @@ jobs:
           fi
 
           # Get last commit date
+          echo "lastCommitDate0"
           lastCommitDate=$(gh api repos/${{ github.repository }}/commits/$branch --jq '.commit.committer.date')
           echo "lastCommitDate"
   
