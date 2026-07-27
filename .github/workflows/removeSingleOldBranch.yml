@@ -82,7 +82,7 @@ jobs:
   
           # Calculate branch age in days
           branchAgeDays=$(( ($(date -u +%s) - $(date -u -d "$lastCommitDate" +%s)) / 86400 ))
-
+          echo "branchAgeDays="$branchAgeDays
           # Check whether the branch is old enough
           if [ $branchAgeDays -ge $AGE_CUTOFF ]; then
             # Get number of new commits
