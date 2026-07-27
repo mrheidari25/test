@@ -77,7 +77,8 @@ jobs:
 
           # Get last commit date
           lastCommitDate=$(gh api repos/${{ github.repository }}/commits/$branch --jq '.commit.committer.date')
-
+          echo "lastCommitDate"
+	  
           # Calculate branch age in days
           branchAgeDays=$(( ($(date -u +%s) - $(date -u -d "$lastCommitDate" +%s)) / 86400 ))
 
@@ -93,7 +94,8 @@ jobs:
                # Get the first commit date (index 0 is the oldest commit in the diff)
                firstCommitDate=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[0].commit.committer.date')
                firstCommitDateF=$(date -u -d "$firstCommitDate" +"%B %d, %Y")
-      
+               echo "firstCommitDate"
+	       
                # Get contributors to the branch
                contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "  - \(.commit.author.name) (@\(.author.login))  "' | sort | uniq)
 
@@ -115,7 +117,7 @@ jobs:
                echo $prBody
                
                # Create PR, close PR, and delete the branch
-               #echo "  Create PR for ${branch}..."
+               echo "  Create PR for ${branch}..."
                #gh pr create --title "[Archive] Branch \"$branch\"" --body "$prBody" --base $MAIN_BRANCH --head $branch >/dev/null 2>&1 || true
 
                commitData=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch")
