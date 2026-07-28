@@ -6,13 +6,13 @@ on:
       age_cutoff:
         description: 'Branches older than this many days'
         required: true
-        default: '10' # In days
+        default: '-1' # In days
         type: number
 
       branch_name:
         description: 'The name of the old branch to remove'
         required: true
-        default: ""
+        default: "feature2"
         type: string	
 
 jobs:
