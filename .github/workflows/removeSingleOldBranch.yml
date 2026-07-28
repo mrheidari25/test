@@ -105,22 +105,22 @@ jobs:
                summary=$(python .github/workflows/create_pr_summary.py <<< "$diff")
                echo $summary
 
-               # Create the PR body with contributors
-               prBody="## **Archiving branch \`$branch\`**
-               - **Last commit on:** $lastCommitDateF
-               - **First commit on:** $firstCommitDateF  
-               - **Total number of commits:** $commitCount  
-               - **Contributors:**  
-               $contributors  
-               ## Changes Summary  
-               *(Generated using Gemini AI)*  
-               $summary"
-               #echo $prBody
-               #printf '%q\n' "$prBody"
+               ## Create the PR body with contributors
+               #prBody="## **Archiving branch \`$branch\`**
+               #- **Last commit on:** $lastCommitDateF
+               #- **First commit on:** $firstCommitDateF  
+               #- **Total number of commits:** $commitCount  
+               #- **Contributors:**  
+               #$contributors  
+               ### Changes Summary  
+               #*(Generated using Gemini AI)*  
+               #$summary"
+               ##echo $prBody
+               ##printf '%q\n' "$prBody"
                
                # Create PR, close PR, and delete the branch
                echo "  Create PR for ${branch}..."
-               gh pr create --title "[Archive] Branch \"$branch\"" --body "$prBody" --base $MAIN_BRANCH --head $branch >/dev/null 2>&1 || true
+               #gh pr create --title "[Archive] Branch \"$branch\"" --body "$prBody" --base $MAIN_BRANCH --head $branch >/dev/null 2>&1 || true
                #gh pr create --title "[Archive] Branch \"feature2\"" --body "I created PR manually" --base main --head feature2
 
                commitData=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch")
