@@ -97,8 +97,8 @@ jobs:
                firstCommitDateF=$(date -u -d "$firstCommitDate" +"%B %d, %Y")
                echo "firstCommitDate"
        
-               ## Get contributors to the branch
-               #contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "  - \(.commit.author.name) (@\(.author.login))  "' | sort | uniq)
+               # Get contributors to the branch
+               contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "  - \(.commit.author.name) (@\(.author.login))  "' | sort | uniq)
 
                ## Get a summary of the branch changes using Google's Gemini AI
                #diff=$(git diff origin/$MAIN_BRANCH...origin/$branch)
