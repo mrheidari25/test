@@ -122,7 +122,7 @@ jobs:
                
                # Create PR, close PR, and delete the branch
                echo "  Create PR for ${branch}..."
-               #gh pr create --title "[Archive] Branch \"$branch\"" --body "$prBody" --base $MAIN_BRANCH --head $branch >/dev/null 2>&1 || true
+               gh pr create --title "[Archive] Branch \"$branch\"" --body "$prBody" --base $MAIN_BRANCH --head $branch >/dev/null 2>&1 || true
                #gh pr create --title "[Archive] Branch \"feature2\"" --body "I created PR manually" --base main --head feature2
 
                commitData=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch")
