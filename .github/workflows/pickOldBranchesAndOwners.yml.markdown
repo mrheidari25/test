@@ -1,0 +1,110 @@
+name: Pick Old Branches & Owners
+
+on:
+  workflow_dispatch:
+
+jobs:
+  PickOldBranchesAndOwners:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+        with:
+          fetch-depth: 0  # Needed to retrieve full commit log
+
+      - name: Setup Python
+        uses: actions/setup-python@v6.2.0
+        with:
+          python-version: '3.x'
+
+      - name: Install GitHub CLI
+        run: sudo apt-get install -y gh
+
+      - name: Find Stale Branches and List Owners
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+        run: |
+          #AGE_CUTOFF=360 # In days
+          AGE_CUTOFF=10 # In days
+          #MAIN_BRANCH=master
+          MAIN_BRANCH=main
+
+          # Fetch all branches
+          git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
+
+          contributorsList=()
+          # Variable for collecting GitHub usernames
+          allContributors=""
+  
+          reportText="The branches listed below have been inactive for over one year. Therefore, they are scheduled for removal in 60 days. "
+          reportText+="If you need any of these branches, please let us know before the deadline."
+          issueBody=$'## Old Branches\n\n'"$reportText"$'\n\n```text\nBRANCH                 AGE                  OWNER\n---------------------------------------------------------------\n'
+
+          # Loop through branches
+          while read branch; do
+            # Skip main branch
+            if [ "$branch" = "master" ] || [ "$branch" = "main" ]; then
+              continue
+            fi
+
+            # Skip if open PR exists
+            open_prs=$(gh pr list --head "$branch" --json number --jq 'length')
+            if [ "$open_prs" -gt 0 ]; then
+              continue
+            fi
+
+            # Get last commit date
+            lastCommitDate=$(gh api repos/${{ github.repository }}/commits/$branch --jq '.commit.committer.date')
+
+            # Calculate branch age in days
+            branchAgeDays=$(( ($(date -u +%s) - $(date -u -d "$lastCommitDate" +%s)) / 86400 ))
+
+            # Check whether the branch is old enough
+            if [ $branchAgeDays -ge $AGE_CUTOFF ]; then
+              # Get contributors to the branch
+              #contributors=$(gh api repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort | uniq)
+              #create an issue
+              #commitData=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch")
+              #contributors=$(printf '%s\n' "$commitData" | jq -r '.commits[] | select(.author.login != null) | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
+              #contributors=$(printf '%s\n' "$contributors" | paste -sd ', ' -)
+
+              contributors=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[] | select(.author.login != null) | "@\(.author.login)"' | sort -u | paste -sd ', ' -)
+              #contributors=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[] | select(.author.login != null) | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
+              contributors=$(printf '%s\n' "$contributors" | paste -sd ', ' -)
+              issueBody+="$(printf '| %s | 🔴 %s days old | 🟢 %s |\n' "$branch" "$branchAgeDays" "$contributors")"
+
+              #contributors=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[] | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
+              #contributors=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[] | select(.author.login != null) | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
+              #contributors=$(printf '%s\n' "$contributors" | paste -sd ', ' -)
+
+              BLUE='\033[34m'
+              RED='\033[31m'
+              GREEN='\033[32m'
+              NC='\033[0m'
+              printf "BRANCH=${BLUE}%-20s${NC} AGE=${RED}%-20s${NC} OWNER=${GREEN}%s${NC}\n" "$branch" "${branchAgeDays} days old" "$contributors"
+
+              #issueBody+=$(printf '%-20s 🔴 %-15s 🟢 %s' "$branch" "$branchAgeDays days old" "$contributors")
+              issueBody+=$'\n'
+
+              # Get only GitHub usernames for notifications
+              contributorLogins=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch" --jq '.commits[].author.login' | sort -u)
+
+              # Add the usernames to the global contributor list
+              allContributors+="$contributorLogins"$'\n'	      
+            fi
+          done < branches.txt
+
+          # Remove duplicate usernames and create GitHub mentions
+          mentions=$(printf '%s\n' "$allContributors" | sed '/^null$/d' | sed '/^$/d' | sort -u | sed 's/^/@/' | paste -sd ' ' -)
+          #echo $mentions
+          # Close the code block
+          #issueBody+=$'\n```'
+
+          # Add the mentions to the issue body
+          #issueBody+=$'\n\n'"$mentions"
+
+          gh issue create  --title "Report of Old Branches"  --body "$issueBody"    

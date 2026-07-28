@@ -1,0 +1,76 @@
+name: Pick Old Branches & Owners
+
+on:
+  workflow_dispatch:
+      age_cutoff:
+        description: 'Branches older than this many days'
+        required: true
+        default: '10' # In days
+        type: number
+	
+jobs:
+  PickOldBranchesAndOwners:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+        with:
+          fetch-depth: 0  # Needed to retrieve full commit log
+
+      - name: Setup Python
+        uses: actions/setup-python@v6.2.0
+        with:
+          python-version: '3.x'
+
+      - name: Install GitHub CLI
+        run: sudo apt-get install -y gh
+
+      - name: Find Stale Branches and List Owners
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+        run: |
+          #AGE_CUTOFF=360 # In days
+          AGE_CUTOFF=${{ inputs.age_cutoff }} # In days
+          #MAIN_BRANCH=master
+          MAIN_BRANCH=main
+
+          # Fetch all branches
+          git branch -r | grep -v '\->' | sed 's/origin\///' > branches.txt
+
+          # Loop through branches
+          while read branch; do
+            # Skip main branch
+            if [ "$branch" = "master" ] || [ "$branch" = "main" ]; then
+              continue
+            fi
+
+            # Skip if open PR exists
+            open_prs=$(gh pr list --head "$branch" --json number --jq 'length')
+            if [ "$open_prs" -gt 0 ]; then
+              continue
+            fi
+
+            # Get last commit date
+            lastCommitDate=$(gh api repos/${{ github.repository }}/commits/$branch --jq '.commit.committer.date')
+
+            # Calculate branch age in days
+            branchAgeDays=$(( ($(date -u +%s) - $(date -u -d "$lastCommitDate" +%s)) / 86400 ))
+
+            # Check whether the branch is old enough
+            if [ $branchAgeDays -ge $AGE_CUTOFF ]; then
+              # Get contributors to the branch
+              commitData=$(gh api "repos/${{ github.repository }}/compare/$MAIN_BRANCH...$branch")
+              contributors=$(printf '%s\n' "$commitData" | jq -r '.commits[] | select(.author.login != null) | "\(.commit.author.name) (@\(.author.login))"' | sort -u)
+              contributors=$(printf '%s\n' "$contributors" | paste -sd ', ' -)
+
+              BLUE='\033[34m'
+              RED='\033[31m'
+              GREEN='\033[32m'
+              NC='\033[0m'
+              printf "BRANCH=${BLUE}%-20s${NC} AGE=${RED}%-20s${NC} OWNER=${GREEN}%s${NC}\n" "$branch" "${branchAgeDays} days old" "$contributors"
+            fi
+          done < branches.txt
