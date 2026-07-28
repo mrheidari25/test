@@ -116,7 +116,7 @@ jobs:
                *(Generated using Gemini AI)*  
                $summary"
                #echo $prBody
-               printf '%q\n' "$prBody"
+               #printf '%q\n' "$prBody"
                
                # Create PR, close PR, and delete the branch
                echo "  Create PR for ${branch}..."
