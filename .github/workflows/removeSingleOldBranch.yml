@@ -43,7 +43,8 @@ jobs:
       - name: Find Stale Branches and List Owners
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          #GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINIAPIKEY2 }}
   
         run: |
           branch="${{ inputs.branch_name }}"
@@ -102,7 +103,7 @@ jobs:
 
                # Get a summary of the branch changes using Google's Gemini AI
                diff=$(git diff origin/$MAIN_BRANCH...origin/$branch)
-               summary=$(python .github/workflows/create_pr_summary.py <<< "$diff")
+               #summary=$(python .github/workflows/create_pr_summary.py <<< "$diff")
                #echo $summary
 
                ## Create the PR body with contributors
