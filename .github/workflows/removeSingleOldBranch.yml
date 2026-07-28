@@ -104,7 +104,7 @@ jobs:
                # Get a summary of the branch changes using Google's Gemini AI
                diff=$(git diff origin/$MAIN_BRANCH...origin/$branch)
                summary=$(python .github/workflows/create_pr_summary.py <<< "$diff")
-               #echo $summary
+               echo $summary
 
                ## Create the PR body with contributors
                #prBody="## **Archiving branch \`$branch\`**
