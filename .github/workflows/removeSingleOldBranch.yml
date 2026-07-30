@@ -107,16 +107,16 @@ jobs:
                echo $summary
 
                # Create the PR body with contributors
-               prBody="## **Archiving branch \`$branch\`**"
-               # prBody="## **Archiving branch \`$branch\`**
-               # - **Last commit on:** $lastCommitDateF
-               # - **First commit on:** $firstCommitDateF  
-               # - **Total number of commits:** $commitCount  
-               # - **Contributors:**  
-               # $contributors  
-               # ## Changes Summary  
-               # *(Generated using Gemini AI)*  
-               # $summary"
+               #prBody="## **Archiving branch \`$branch\`**"
+               prBody="## **Archiving branch \`$branch\`**
+               - **Last commit on:** $lastCommitDateF
+               - **First commit on:** $firstCommitDateF  
+               - **Total number of commits:** $commitCount  
+               - **Contributors:**  
+               $contributors  
+               ## Changes Summary  
+               *(Generated using Gemini AI)*  
+               $summary"
                # ##echo $prBody
                # #printf '%q\n' "$prBody"
                
