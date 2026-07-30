@@ -117,6 +117,24 @@ jobs:
                ## Changes Summary  
                *(Generated using Gemini AI)*  
                $summary"
+
+               prBody=$(cat <<EOF
+               ## **Archiving branch \`$branch\`**
+               
+               - **Last commit on:** $lastCommitDateF
+               - **First commit on:** $firstCommitDateF
+               - **Total number of commits:** $commitCount
+               - **Contributors:**
+               $contributors
+               
+               ## Changes Summary
+               
+               *(Generated using Gemini AI)*
+               
+               $summary
+               EOF
+               )
+       
                # ##echo $prBody
                printf '%q\n' "$prBody"
                
