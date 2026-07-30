@@ -84,6 +84,7 @@ jobs:
           # Calculate branch age in days
           branchAgeDays=$(( ($(date -u +%s) - $(date -u -d "$lastCommitDate" +%s)) / 86400 ))
           echo "branchAgeDays="$branchAgeDays
+
           # Check whether the branch is old enough
           if [ $branchAgeDays -ge $AGE_CUTOFF ]; then
             # Get number of new commits
@@ -106,18 +107,7 @@ jobs:
                summary=$(python .github/workflows/create_pr_summary.py <<< "$diff")
                echo $summary
 
-               # Create the PR body with contributors
-               #prBody="## **Archiving branch \`$branch\`**"
-               prBody="## **Archiving branch \`$branch\`**
-               - **Last commit on:** $lastCommitDateF
-               - **First commit on:** $firstCommitDateF  
-               - **Total number of commits:** $commitCount  
-               - **Contributors:**  
-               $contributors  
-               ## Changes Summary  
-               *(Generated using Gemini AI)*  
-               $summary"
-
+               # Create the PR body with contributors               
                prBody=$'## **Archiving branch `'"$branch"$'**\n\n'
                prBody+="- **Last commit on:** $lastCommitDateF"$'\n'
                prBody+="- **First commit on:** $firstCommitDateF"$'\n'
@@ -128,7 +118,6 @@ jobs:
                prBody+="*(Generated using Gemini AI)*"$'\n\n'
                prBody+="$summary"
 
-               # ##echo $prBody
                printf '%q\n' "$prBody"
                
                # Create PR, close PR, and delete the branch
